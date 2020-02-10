@@ -1,0 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <p style="color:red; font-size:20px"> {{ message }}</p><br>
+    <button onclick="window.location.href = '{{ path("home") }}'">Grįžti į pradinį puslapį</button>
+{% endblock %}

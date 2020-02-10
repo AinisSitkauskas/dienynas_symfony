@@ -1,0 +1,28 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dienynas{% endblock %}
+
+{% block body %}
+    <form method="post">
+        <h1 class="h3 mb-3 font-weight-normal">Dienynas</h1>
+        <label for="inputUsername">Vartotojo vardas</label><br>
+        <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" required
+               autofocus>
+        <br>
+        <label for="inputPassword">Slaptažodis</label><br>
+        <input type="password" name="password" id="inputPassword" class="form-control" required>
+
+        <input type="hidden" name="_csrf_token"
+               value="{{ csrf_token('authenticate') }}"
+        >
+
+        <div class="checkbox mb-3">
+            <label>
+                <input type="checkbox" name="_remember_me"> Prisiminti
+            </label>
+        </div>
+        <br>
+
+        <button class="btn btn-lg btn-primary" type="submit">Prisijungti</button>
+    </form>
+{% endblock %}
