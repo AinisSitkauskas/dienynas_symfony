@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Feb 10, 2020 at 09:08 PM
+-- Generation Time: Feb 21, 2020 at 11:38 AM
 -- Server version: 5.7.29-0ubuntu0.18.04.1
 -- PHP Version: 7.3.14-6+ubuntu18.04.1+deb.sury.org+1
 
@@ -36,7 +36,7 @@ CREATE TABLE `migration_versions` (
 --
 
 INSERT INTO `migration_versions` (`version`, `executed_at`) VALUES
-('20200210185507', '2020-02-10 18:55:20');
+('20200210185507', '2020-02-21 09:36:48');
 
 -- --------------------------------------------------------
 
