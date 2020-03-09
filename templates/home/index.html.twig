@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dienynas{% endblock %}
+
+{% block body %}
+    <h1> Sveikas, sugrįžęs {{ user.username }}! </h1>
+    <label>Registruoti naują vartotoją: </label>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("app_register") }}'">Registruoti</button>
+    <br><br>
+    <label>Ištrinti vartotoją: </label>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("delete_user") }}'">Delete</button>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("app_logout") }}'">Atsijungti</button>
+{% endblock %}
