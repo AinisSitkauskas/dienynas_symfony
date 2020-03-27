@@ -22,9 +22,9 @@ final class Version20200210185507 extends AbstractMigration
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
-        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649F85E0677 (username), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
-        $this->addSql('INSERT INTO user (id, username, roles, password) VALUES
-(1, \'admin\', \'[]\', \'$argon2i$v=19$m=65536,t=4,p=1$SU9UVGVIUXFELlBmZ1pNcw$61mx6DV1U7YE1u8K5sHfrzEs+mHJLsVDy1TwB3bXdM0\')');
+        $this->addSql('CREATE TABLE user (id INT AUTO_INCREMENT NOT NULL, username VARCHAR(180) NOT NULL, name VARCHAR(255) NOT NULL, surname VARCHAR(255) NOT NULL, roles JSON NOT NULL, password VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_8D93D649F85E0677 (username), PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('INSERT INTO user (id, username, name, surname, roles, password) VALUES
+(1, \'admin\', \'admin\', \'admin\', \'[]\', \'$argon2i$v=19$m=65536,t=4,p=1$SU9UVGVIUXFELlBmZ1pNcw$61mx6DV1U7YE1u8K5sHfrzEs+mHJLsVDy1TwB3bXdM0\')');
 
     }
 

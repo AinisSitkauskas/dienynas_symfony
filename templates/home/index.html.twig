@@ -3,7 +3,7 @@
 {% block title %}Dienynas{% endblock %}
 
 {% block body %}
-    <h1> Sveikas, sugrįžęs {{ user.username }}! </h1>
+    <h1> Sveikas, sugrįžęs {{ user.name }} {{ user.surname }}! </h1>
     <label>Registruoti naują vartotoją: </label>
     <br><br>
     <button onclick="window.location.href = '{{ path("app_register") }}'">Registruoti</button>
