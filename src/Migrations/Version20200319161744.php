@@ -23,6 +23,17 @@ final class Version20200319161744 extends AbstractMigration
         $this->abortIf($this->connection->getDatabasePlatform()->getName() !== 'mysql', 'Migration can only be executed safely on \'mysql\'.');
 
         $this->addSql('CREATE TABLE teaching_subject (id INT AUTO_INCREMENT NOT NULL, teaching_subject VARCHAR(255) NOT NULL, PRIMARY KEY(id)) DEFAULT CHARACTER SET utf8mb4 COLLATE `utf8mb4_unicode_ci` ENGINE = InnoDB');
+        $this->addSql('INSERT INTO `teaching_subject` (`id`, `teaching_subject`) VALUES
+        (1, \'Matematika\'),
+        (2, \'Istorija\'),
+        (3, \'Lietuvių kalba\'),
+        (4, \'Anglų kalba\'),
+        (5, \'Rusų kalba\'),
+        (6, \'Geografija\'),
+        (7, \'Fizika\'),
+        (8, \'Chemija\'),
+        (9, \'Biologija\'),
+        (10, \'Informatika\')');
     }
 
     public function down(Schema $schema) : void
