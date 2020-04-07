@@ -10,7 +10,11 @@
     <br><br>
     <label>Ištrinti vartotoją: </label>
     <br><br>
-    <button onclick="window.location.href = '{{ path("delete_user") }}'">Delete</button>
+    <button onclick="window.location.href = '{{ path("delete_user") }}'">Ištrinti</button>
+    <br><br>
+    <label>Įrašyti pažymį: </label>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("insert_mark") }}'">Įrašyti</button>
     <br><br>
     <button onclick="window.location.href = '{{ path("app_logout") }}'">Atsijungti</button>
 {% endblock %}
