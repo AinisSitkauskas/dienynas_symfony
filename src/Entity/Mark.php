@@ -20,13 +20,13 @@ class Mark
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="marks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $studentId;
+    private $fkStudent;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TeachingSubject", inversedBy="marks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $teachingSubject;
+    private $fkTeachingSubject;
 
     /**
      * @ORM\Column(type="integer")
@@ -43,26 +43,26 @@ class Mark
         return $this->id;
     }
 
-    public function getStudentId(): ?User
+    public function getStudent(): ?User
     {
-        return $this->studentId;
+        return $this->fkStudent;
     }
 
-    public function setStudentId(?User $studentId): self
+    public function setStudent(?User $fkStudent): self
     {
-        $this->studentId = $studentId;
+        $this->fkStudent = $fkStudent;
 
         return $this;
     }
 
     public function getTeachingSubject(): ?TeachingSubject
     {
-        return $this->teachingSubject;
+        return $this->fkTeachingSubject;
     }
 
-    public function setTeachingSubject(?TeachingSubject $teachingSubject): self
+    public function setTeachingSubject(?TeachingSubject $fkTeachingSubject): self
     {
-        $this->teachingSubject = $teachingSubject;
+        $this->fkTeachingSubject = $fkTeachingSubject;
 
         return $this;
     }
@@ -84,9 +84,11 @@ class Mark
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(): self
     {
-        $this->date = $date->format('Y-m-d');
+
+    //    $date = new \DateTime();
+        $this->date = new \DateTime();
 
         return $this;
     }

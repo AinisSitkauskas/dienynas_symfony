@@ -26,11 +26,11 @@ class TeachingSubject
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="teachingSubject")
      */
-    private $marks;
+    private $fkMark;
 
     public function __construct()
     {
-        $this->marks = new ArrayCollection();
+        $this->fkMark = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -55,13 +55,13 @@ class TeachingSubject
      */
     public function getMarks(): Collection
     {
-        return $this->marks;
+        return $this->fkMark;
     }
 
     public function addMark(Mark $mark): self
     {
-        if (!$this->marks->contains($mark)) {
-            $this->marks[] = $mark;
+        if (!$this->fkMark->contains($mark)) {
+            $this->fkMark[] = $mark;
             $mark->setTeachingSubject($this);
         }
 
@@ -70,8 +70,8 @@ class TeachingSubject
 
     public function removeMark(Mark $mark): self
     {
-        if ($this->marks->contains($mark)) {
-            $this->marks->removeElement($mark);
+        if ($this->fkMark->contains($mark)) {
+            $this->fkMark->removeElement($mark);
             // set the owning side to null (unless already changed)
             if ($mark->getTeachingSubject() === $this) {
                 $mark->setTeachingSubject(null);
