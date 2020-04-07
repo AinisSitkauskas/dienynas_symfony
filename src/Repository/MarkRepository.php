@@ -19,6 +19,20 @@ class MarkRepository extends ServiceEntityRepository
         parent::__construct($registry, Mark::class);
     }
 
+    public function getAverageMarks($studentId, $teachingSubjectId)
+    {
+        return $this->createQueryBuilder('m')
+            ->select("avg(m.mark) as average_mark")
+            ->andWhere('m.fkStudent = :studentId')
+            ->andWhere('m.fkTeachingSubject = :teachingSubjectId')
+            ->setParameter('studentId', $studentId)
+            ->setParameter('teachingSubjectId', $teachingSubjectId)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
+
+
     // /**
     //  * @return Mark[] Returns an array of Mark objects
     //  */
