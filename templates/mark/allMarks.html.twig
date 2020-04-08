@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Visi pažymiai{% endblock %}
+{% block title %}Visi pažymių vidurkiai{% endblock %}
 
 {% block body %}
-    <h1>Mokinių pažymiai</h1>
+    <h1>Mokinių pažymių vidurkiai</h1>
     <br>
     {% if averageMarks is empty %}
         <p>Nėra įvestų pažymių</p>
@@ -13,7 +13,7 @@
             <tr>
                 <th scope="row">Mokinys</th>
                 <th scope="row">Mokomasis dalykas</th>
-                <th scope="row">Pažymys</th>
+                <th scope="row">Pažymių vidurkis</th>
             </tr>
             {% for averageMark in averageMarks %}
                 <tr>
