@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Mark;
-use App\Entity\TeachingSubject;
 use App\Exceptions\PublicException;
 use App\Form\MarkInsertFormType;
 use App\Repository\MarkRepository;
@@ -87,11 +86,9 @@ class MarkController extends AbstractController
 
     /**
      * @Route("/mark/all", name="all_marks")
-     * @param Request $request
      * @return Response
-     * @throws PublicException
      */
-    public function allMarks(Request $request): Response
+    public function allMarks(): Response
     {
         $teachingSubjects = $this->teachingSubjectRepository->findAll();
         $students = $this->userRepository->findAll();
@@ -110,6 +107,27 @@ class MarkController extends AbstractController
         }
         return $this->render('mark/allMarks.html.twig', [
             'averageMarks' => $averageMarks,
+        ]);
+    }
+
+    /**
+     * @Route("/mark/top", name="top_marks")
+     * @return Response
+     */
+    public function topMarks(): Response
+    {
+        $topStudents = $this->markRepository->getTopStudents();
+
+        $topStudentsList = [];
+
+        if ($topStudents) {
+            foreach ($topStudents as $topStudent) {
+                    $topStudentsList[] = ['student' => $topStudent['name'] . ' ' . $topStudent['surname'],
+                        'averageMark' => $topStudent['averageMark']];
+                }
+            }
+        return $this->render('mark/topMarks.html.twig', [
+            'topStudentsList' => $topStudentsList,
         ]);
     }
 }

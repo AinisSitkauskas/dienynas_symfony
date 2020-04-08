@@ -32,7 +32,18 @@ class MarkRepository extends ServiceEntityRepository
             ;
     }
 
-
+    public function getTopStudents()
+    {
+        return $this->createQueryBuilder('m')
+            ->select("u.id, u.name, u.surname, avg(m.mark) as averageMark")
+            ->join('m.fkStudent', 'u', 'WITH',  'm.fkStudent = u.id')
+            ->groupBy('u.id')
+            ->orderBy('averageMark','DESC')
+            ->setMaxResults(10)
+            ->getQuery()
+            ->getResult()
+            ;
+    }
     // /**
     //  * @return Mark[] Returns an array of Mark objects
     //  */
