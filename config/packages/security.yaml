@@ -41,3 +41,4 @@ security:
         - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/delete, role: ROLE_USER }
         - { path: ^/register, role: ROLE_USER }
+        - { path: ^/mark, role: ROLE_USER }
