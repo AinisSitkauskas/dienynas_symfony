@@ -3,6 +3,7 @@
 namespace App\Form;
 
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use App\Entity\{User, Mark, TeachingSubject};
 use Symfony\Component\Form\AbstractType;
@@ -38,6 +39,8 @@ class MarkInsertFormType extends AbstractType
                         'message' => 'Prašome įvesti mokinio pažymį',
                     ]),
                 ]
+            ])->add('date', DateType::class, [
+                'widget' => 'single_text',
             ]);
     }
 

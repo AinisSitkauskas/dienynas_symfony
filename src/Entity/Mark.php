@@ -84,11 +84,9 @@ class Mark
         return $this->date;
     }
 
-    public function setDate(): self
+    public function setDate(\DateTime $date): self
     {
-
-    //    $date = new \DateTime();
-        $this->date = new \DateTime();
+        $this->date = $date;
 
         return $this;
     }

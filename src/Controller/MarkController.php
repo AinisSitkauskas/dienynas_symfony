@@ -69,7 +69,6 @@ class MarkController extends AbstractController
                 throw new PublicException('Prašome pasirinkti mokinį');
             }
 
-            $mark->setDate();
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($mark);
             $entityManager->flush();
