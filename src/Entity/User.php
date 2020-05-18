@@ -48,9 +48,9 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="studentId")
+     * @ORM\OneToMany(targetEntity="App\Entity\Mark", mappedBy="student")
      */
-    private $fkMark;
+    private $marks;
 
     public function __construct()
     {
@@ -69,7 +69,7 @@ class User implements UserInterface
      */
     public function getUsername(): string
     {
-        return (string) $this->username;
+        return (string)$this->username;
     }
 
     public function setUsername(string $username): self
@@ -103,7 +103,7 @@ class User implements UserInterface
      */
     public function getPassword(): string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(string $password): self
@@ -135,13 +135,13 @@ class User implements UserInterface
      */
     public function getMarks(): Collection
     {
-        return $this->fkMark;
+        return $this->marks;
     }
 
     public function addMark(Mark $mark): self
     {
-        if (!$this->fkMark->contains($mark)) {
-            $this->fkMark[] = $mark;
+        if (!$this->marks->contains($mark)) {
+            $this->marks[] = $mark;
             $mark->setStudent($this);
         }
 
@@ -150,8 +150,8 @@ class User implements UserInterface
 
     public function removeMark(Mark $mark): self
     {
-        if ($this->fkMark->contains($mark)) {
-            $this->fkMark->removeElement($mark);
+        if ($this->marks->contains($mark)) {
+            $this->marks->removeElement($mark);
             // set the owning side to null (unless already changed)
             if ($mark->getStudent() === $this) {
                 $mark->setStudent(null);

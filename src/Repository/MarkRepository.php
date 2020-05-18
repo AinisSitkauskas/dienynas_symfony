@@ -28,8 +28,8 @@ class MarkRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->select("avg(m.mark) as average_mark")
-            ->andWhere('m.fkStudent = :studentId')
-            ->andWhere('m.fkTeachingSubject = :teachingSubjectId')
+            ->andWhere('m.student = :studentId')
+            ->andWhere('m.teachingSubject = :teachingSubjectId')
             ->setParameter('studentId', $studentId)
             ->setParameter('teachingSubjectId', $teachingSubjectId)
             ->getQuery()
@@ -44,7 +44,7 @@ class MarkRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('m')
             ->select("u.id, u.name, u.surname, avg(m.mark) as averageMark")
-            ->join('m.fkStudent', 'u', 'WITH',  'm.fkStudent = u.id')
+            ->join('m.student', 'u', 'WITH',  'm.student = u.id')
             ->groupBy('u.id')
             ->having('averageMark >= 9')
             ->orderBy('averageMark','DESC')

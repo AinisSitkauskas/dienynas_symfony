@@ -20,13 +20,13 @@ class Mark
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="marks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $fkStudent;
+    private $student;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\TeachingSubject", inversedBy="marks")
      * @ORM\JoinColumn(nullable=false)
      */
-    private $fkTeachingSubject;
+    private $teachingSubject;
 
     /**
      * @ORM\Column(type="integer")
@@ -45,24 +45,24 @@ class Mark
 
     public function getStudent(): ?User
     {
-        return $this->fkStudent;
+        return $this->student;
     }
 
-    public function setStudent(?User $fkStudent): self
+    public function setStudent(?User $student): self
     {
-        $this->fkStudent = $fkStudent;
+        $this->student = $student;
 
         return $this;
     }
 
     public function getTeachingSubject(): ?TeachingSubject
     {
-        return $this->fkTeachingSubject;
+        return $this->teachingSubject;
     }
 
-    public function setTeachingSubject(?TeachingSubject $fkTeachingSubject): self
+    public function setTeachingSubject(?TeachingSubject $teachingSubject): self
     {
-        $this->fkTeachingSubject = $fkTeachingSubject;
+        $this->teachingSubject = $teachingSubject;
 
         return $this;
     }
