@@ -19,6 +19,11 @@ class MarkRepository extends ServiceEntityRepository
         parent::__construct($registry, Mark::class);
     }
 
+    /**
+     * @param int $studentId
+     * @param int $teachingSubjectId
+     * @return float
+     */
     public function getAverageMarks($studentId, $teachingSubjectId)
     {
         return $this->createQueryBuilder('m')
@@ -28,48 +33,24 @@ class MarkRepository extends ServiceEntityRepository
             ->setParameter('studentId', $studentId)
             ->setParameter('teachingSubjectId', $teachingSubjectId)
             ->getQuery()
-            ->getResult()
+            ->getSingleResult()
             ;
     }
 
+    /**
+     * @return array
+     */
     public function getTopStudents()
     {
         return $this->createQueryBuilder('m')
             ->select("u.id, u.name, u.surname, avg(m.mark) as averageMark")
             ->join('m.fkStudent', 'u', 'WITH',  'm.fkStudent = u.id')
             ->groupBy('u.id')
+            ->having('averageMark >= 9')
             ->orderBy('averageMark','DESC')
             ->setMaxResults(10)
             ->getQuery()
             ->getResult()
             ;
     }
-    // /**
-    //  * @return Mark[] Returns an array of Mark objects
-    //  */
-    /*
-    public function findByExampleField($value)
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('m.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
-
-    /*
-    public function findOneBySomeField($value): ?Mark
-    {
-        return $this->createQueryBuilder('m')
-            ->andWhere('m.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
-    }
-    */
 }

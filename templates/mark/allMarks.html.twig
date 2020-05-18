@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ averageMark.student }}</td>
                     <td>{{ averageMark.teachingSubject }}</td>
-                    <td>{{ averageMark.averageMark|number_format(2, '.', ',') }}</td>
+                    <td>{{ averageMark.averageMark|number_format(2, ',') }}</td>
                 </tr>
             {% endfor %}
             </tbody>

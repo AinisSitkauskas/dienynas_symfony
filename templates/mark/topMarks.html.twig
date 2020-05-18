@@ -6,7 +6,7 @@
     <h1>Pirmūnų sąrašas</h1>
     <br>
     {% if topStudentsList is empty %}
-        <p>Nėra įvestų pažymių</p>
+        <p>Pirmūnų sąrašas tuščias</p>
     {% else %}
         <table class="table">
             <tbody>
@@ -15,14 +15,12 @@
                 <th scope="row">Mokinys</th>
                 <th scope="row">Mokinio vidurkis</th>
             </tr>
-            {%   set i = 1 %}
             {% for topStudent in topStudentsList %}
                 <tr>
-                    <td>{{ i }}</td>
+                    <td>{{ loop.index }}</td>
                     <td>{{ topStudent.student }}</td>
-                    <td>{{ topStudent.averageMark|number_format(2, '.', ',') }}</td>
+                    <td>{{ topStudent.averageMark|number_format(2, ',') }}</td>
                 </tr>
-            {% set i = 1 + i %}
             {% endfor %}
             </tbody>
         </table>

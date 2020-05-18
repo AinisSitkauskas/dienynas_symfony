@@ -15,6 +15,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class MarkController extends AbstractController
 {
+    private const ADMIN_USERNAME = 'admin';
+
     /**
      * @var MarkRepository
      */
@@ -65,7 +67,7 @@ class MarkController extends AbstractController
                 throw new PublicException($message);
             }
 
-            if ($mark->getStudent()->getId() == 1) {
+            if ($mark->getStudent()->getUsername() == self::ADMIN_USERNAME) {
                 throw new PublicException('Prašome pasirinkti mokinį');
             }
 
@@ -96,10 +98,10 @@ class MarkController extends AbstractController
         foreach ($teachingSubjects as $teachingSubject) {
             foreach ($students as $student) {
                 $averageMark = $this->markRepository->getAverageMarks($student->getId(), $teachingSubject->getId());
-                if ($averageMark[0]['average_mark']) {
+                if ($averageMark['average_mark']) {
                     $averageMarks[] = ['student' => $student->getName() . ' ' . $student->getSurname(),
                         'teachingSubject' => $teachingSubject->getTeachingSubject(),
-                        'averageMark' => $averageMark[0]['average_mark']];
+                        'averageMark' => $averageMark['average_mark']];
                 }
 
             }
@@ -116,15 +118,14 @@ class MarkController extends AbstractController
     public function topMarks(): Response
     {
         $topStudents = $this->markRepository->getTopStudents();
-
         $topStudentsList = [];
 
         if ($topStudents) {
             foreach ($topStudents as $topStudent) {
-                    $topStudentsList[] = ['student' => $topStudent['name'] . ' ' . $topStudent['surname'],
-                        'averageMark' => $topStudent['averageMark']];
-                }
+                $topStudentsList[] = ['student' => $topStudent['name'] . ' ' . $topStudent['surname'],
+                    'averageMark' => $topStudent['averageMark']];
             }
+        }
         return $this->render('mark/topMarks.html.twig', [
             'topStudentsList' => $topStudentsList,
         ]);
