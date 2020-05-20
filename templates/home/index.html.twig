@@ -3,14 +3,26 @@
 {% block title %}Dienynas{% endblock %}
 
 {% block body %}
-    <h1> Sveikas, sugrįžęs {{ user.username }}! </h1>
+    <h1> Sveikas, sugrįžęs {{ user.name }} {{ user.surname }}! </h1>
     <label>Registruoti naują vartotoją: </label>
     <br><br>
     <button onclick="window.location.href = '{{ path("app_register") }}'">Registruoti</button>
     <br><br>
     <label>Ištrinti vartotoją: </label>
     <br><br>
-    <button onclick="window.location.href = '{{ path("delete_user") }}'">Delete</button>
+    <button onclick="window.location.href = '{{ path("delete_user") }}'">Ištrinti</button>
+    <br><br>
+    <label>Įrašyti pažymį: </label>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("insert_mark") }}'">Įrašyti</button>
+    <br><br>
+    <label>Visi pažymių vidurkiai: </label>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("all_marks") }}'">Visi pažymiai</button>
+    <br><br>
+    <label>Pirmūnų sąrašas: </label>
+    <br><br>
+    <button onclick="window.location.href = '{{ path("top_marks") }}'">Pirmūnai</button>
     <br><br>
     <button onclick="window.location.href = '{{ path("app_logout") }}'">Atsijungti</button>
 {% endblock %}

@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Pažymio įvedimas{% endblock %}
+
+{% block body %}
+    <h1>Pažymio įvedimas</h1>
+    <br>
+    {{ form_start(markInsertForm) }}
+    <label>Pasirinkite mokinį: </label>
+    <br>
+    {{ form_widget(markInsertForm.student) }}
+    <br><br>
+    <label>Pasirinkite mokomajį dalyką: </label>
+    <br>
+    {{ form_widget(markInsertForm.teachingSubject) }}
+    <br><br>
+    <label>Įveskite pažymį: </label>
+    <br>
+    {{ form_widget(markInsertForm.mark) }}
+    <br><br>
+    <label>Įveskite datą: </label>
+    <br>
+    {{ form_widget(markInsertForm.date) }}
+    <br><br>
+    <button class="btn">Įrašyti pažymį</button>
+    {{ form_end(markInsertForm) }}
+    <br><br>
+    {% if markInserted == true %}
+        <p style="color:red">Pažymys įrašytas ! </p>
+        <br><br>
+    {% endif %}
+    <button onclick="window.location.href = '{{ path("home") }}'">Grįžti į pradinį puslapį</button>
+{% endblock %}
+

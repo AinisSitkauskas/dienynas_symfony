@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Visi pažymių vidurkiai{% endblock %}
+
+{% block body %}
+    <h1>Mokinių pažymių vidurkiai</h1>
+    <br>
+    {% if averageMarks is empty %}
+        <p>Nėra įvestų pažymių</p>
+    {% else %}
+        <table class="table">
+            <tbody>
+            <tr>
+                <th scope="row">Mokinys</th>
+                <th scope="row">Mokomasis dalykas</th>
+                <th scope="row">Pažymių vidurkis</th>
+            </tr>
+            {% for averageMark in averageMarks %}
+                <tr>
+                    <td>{{ averageMark.student }}</td>
+                    <td>{{ averageMark.teachingSubject }}</td>
+                    <td>{{ averageMark.averageMark|number_format(2, ',') }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <br><br>
+    <button onclick="window.location.href = '{{ path("home") }}'">Grįžti į pradinį puslapį</button>
+{% endblock %}
