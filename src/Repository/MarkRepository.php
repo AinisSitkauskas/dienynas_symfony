@@ -20,24 +20,6 @@ class MarkRepository extends ServiceEntityRepository
     }
 
     /**
-     * @param int $studentId
-     * @param int $teachingSubjectId
-     * @return float
-     */
-    public function getAverageMarks($studentId, $teachingSubjectId)
-    {
-        return $this->createQueryBuilder('m')
-            ->select("avg(m.mark) as average_mark")
-            ->andWhere('m.student = :studentId')
-            ->andWhere('m.teachingSubject = :teachingSubjectId')
-            ->setParameter('studentId', $studentId)
-            ->setParameter('teachingSubjectId', $teachingSubjectId)
-            ->getQuery()
-            ->getSingleResult()
-            ;
-    }
-
-    /**
      * @return array
      */
     public function getTopStudents()

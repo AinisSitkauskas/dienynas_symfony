@@ -7,7 +7,7 @@ use App\Exceptions\PublicException;
 use App\Form\MarkInsertFormType;
 use App\Repository\MarkRepository;
 use App\Repository\TeachingSubjectRepository;
-use App\Repository\UserRepository;
+use App\Service\AverageMark;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -28,24 +28,24 @@ class MarkController extends AbstractController
     private $teachingSubjectRepository;
 
     /**
-     * @var UserRepository
+     * @var AverageMark
      */
-    private $userRepository;
+    private $averageMark;
 
     /**
      * MarkController constructor.
      * @param MarkRepository $markRepository
      * @param TeachingSubjectRepository $teachingSubjectRepository
-     * @param UserRepository $userRepository
+     * @param AverageMark $averageMark
      */
     public function __construct(
         MarkRepository $markRepository,
         TeachingSubjectRepository $teachingSubjectRepository,
-        UserRepository $userRepository)
+        AverageMark $averageMark)
     {
         $this->markRepository = $markRepository;
         $this->teachingSubjectRepository = $teachingSubjectRepository;
-        $this->userRepository = $userRepository;
+        $this->averageMark = $averageMark;
     }
 
     /**
@@ -92,22 +92,11 @@ class MarkController extends AbstractController
     public function allMarks(): Response
     {
         $teachingSubjects = $this->teachingSubjectRepository->findAll();
-        $students = $this->userRepository->findAll();
-        $averageMarks = [];
+        $studentsWithAverageMarks = $this->averageMark->getStudentsWithAverageMarks();
 
-        foreach ($teachingSubjects as $teachingSubject) {
-            foreach ($students as $student) {
-                $averageMark = $this->markRepository->getAverageMarks($student->getId(), $teachingSubject->getId());
-                if ($averageMark['average_mark']) {
-                    $averageMarks[] = ['student' => $student->getName() . ' ' . $student->getSurname(),
-                        'teachingSubject' => $teachingSubject->getTeachingSubject(),
-                        'averageMark' => $averageMark['average_mark']];
-                }
-
-            }
-        }
         return $this->render('mark/allMarks.html.twig', [
-            'averageMarks' => $averageMarks,
+            'studentsWithAverageMarks' => $studentsWithAverageMarks,
+            'teachingSubjects' => $teachingSubjects
         ]);
     }
 
