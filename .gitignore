@@ -20,3 +20,8 @@
 ###< symfony/web-server-bundle ###
 
 .env
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
