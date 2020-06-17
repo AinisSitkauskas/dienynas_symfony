@@ -63,11 +63,36 @@ class AverageMarkTest extends TestCase
         $this->markRepositoryMock->method('findAll')->willReturn($this->marks);
         $this->teachingSubjectRepositoryMock->method('findAll')->willReturn($this->teachingSubjects);
 
-        $result = [];
-        $result[] = ['Jonas Jonaitis', 8, '-'];
-        $result[] = ['Petras Petraitis', '-', 3];
+        $expected = [];
+        $expected[] = ['Jonas Jonaitis', 8, '-'];
+        $expected[] = ['Petras Petraitis', '-', 3];
 
-        $this->assertSame($result, $this->averageMark->getStudentsWithAverageMarks());
+        $this->assertSame($expected, $this->averageMark->getStudentsWithAverageMarks());
+    }
+
+    public function testGetUserTeachingSubjectsWithAverageMarks()
+    {
+        $this->markRepositoryMock->method('findAll')->willReturn($this->marks);
+        $this->teachingSubjectRepositoryMock->method('findAll')->willReturn($this->teachingSubjects);
+
+        $expected = [];
+        $expected[] = ['Matematika', 8];
+        $expected[] = ['Istorija', '-'];
+
+        $this->assertSame($expected, $this->averageMark->getUserTeachingSubjectsWithAverageMarks(1));
+    }
+
+    public function testGetUserFutureAverageMark()
+    {
+        $currentMarks = [];
+        $currentMarks[] = ['mark' => 7];
+        $currentMarks[] = ['mark' => 8];
+        $currentMarks[] = ['mark' => 9];
+
+        $this->markRepositoryMock->method('getMarks')->willReturn($currentMarks);
+        $futureMarks = "4, 10, 10";
+
+        $this->assertSame(8, $this->averageMark->getUserFutureAverageMark(1, 1, $futureMarks));
     }
 
     public function setUpData()
@@ -84,7 +109,7 @@ class AverageMarkTest extends TestCase
         $studentTwo->method('getSurname')->willReturn('Petraitis');
         $this->students[] = $studentTwo;
 
-        $teachingSubjectOne =  $this->createMock(TeachingSubject::class);
+        $teachingSubjectOne = $this->createMock(TeachingSubject::class);
         $teachingSubjectOne->method('getId')->willReturn(1);
         $teachingSubjectOne->method('getTeachingSubject')->willReturn('Matematika');
         $this->teachingSubjects[] = $teachingSubjectOne;

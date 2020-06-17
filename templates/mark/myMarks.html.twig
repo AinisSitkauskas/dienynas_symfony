@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mano pažymių vidurkiai{% endblock %}
+
+{% block body %}
+    <h1>Mano pažymių vidurkiai</h1>
+    <br>
+    <table class="table">
+        <tbody>
+        <tr>
+            <th scope="row">Mokomasis dalykas</th>
+            <th scope="row">Pažymys</th>
+        </tr>
+        {% for userTeachingSubjectsWithAverageMark in userTeachingSubjectsWithAverageMarks %}
+            <tr>
+                <td>{{ userTeachingSubjectsWithAverageMark[0] }}</td>
+                <td>{{ userTeachingSubjectsWithAverageMark[1] }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <br>
+
+    <h1>Pažymio vidurkio skaičiuoklė</h1>
+    <p>Čia galima sužinoti pažymio vidurkį iš mokomojo dalyko gavus papildomus pažymius.
+        Pažymiai vedami juos atskyrus kableliais (pvz: 9,8,10). Pažymiai galimi tarp 1 ir 10, veskite tik sveikuosius
+        skaičius. </p>
+    <br>
+    {{ form_start(averageMarkCalculatorForm) }}
+    <label>Įveskite pažymius: </label>
+    <br>
+    {{ form_widget(averageMarkCalculatorForm.marks) }}
+    <br><br>
+    <label>Pasirinkite mokomajį dalyką: </label>
+    <br>
+    {{ form_widget(averageMarkCalculatorForm.teachingSubject) }}
+    <br><br>
+    <button class="btn">Skaičiuoti</button>
+    {{ form_end(averageMarkCalculatorForm) }}
+    <br><br>
+    {% if formSubmited == true %}
+        <p>{{ calculationResult }}</p>
+        <br>
+    {% endif %}
+    <button onclick="window.location.href = '{{ path("home") }}'">Grįžti į pradinį puslapį</button>
+{% endblock %}
