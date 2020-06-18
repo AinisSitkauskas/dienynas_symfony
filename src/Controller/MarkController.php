@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Mark;
 use App\Exceptions\PublicException;
+use App\Form\AverageMarkCalculatorFormType;
 use App\Form\MarkInsertFormType;
 use App\Repository\MarkRepository;
 use App\Repository\TeachingSubjectRepository;
@@ -12,6 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 class MarkController extends AbstractController
 {
@@ -97,6 +99,42 @@ class MarkController extends AbstractController
         return $this->render('mark/allMarks.html.twig', [
             'studentsWithAverageMarks' => $studentsWithAverageMarks,
             'teachingSubjects' => $teachingSubjects
+        ]);
+    }
+
+    /**
+     * @Route("/mark/my", name="my_marks")
+     * @param Request $request
+     * @param UserInterface $user
+     * @return Response
+     * @throws PublicException
+     */
+    public function myMarks(Request $request, UserInterface $user): Response
+    {
+        $userTeachingSubjectsWithAverageMarks = $this->averageMark->getUserTeachingSubjectsWithAverageMarks($user->getId());
+
+        $form = $this->createForm(AverageMarkCalculatorFormType::class);
+        $form->handleRequest($request);
+        $calculationResult = '';
+
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                $message = $form->getErrors(true);
+                throw new PublicException($message);
+            }
+
+            $formData = $form->getData();
+            $futureAverageMark = $this->averageMark->getUserFutureAverageMark($user->getId(), $formData['teachingSubject']->getId(), $formData['marks']);
+            $teachingSubject = strtolower($formData['teachingSubject']->getTeachingSubject());
+            $teachingSubject = substr($teachingSubject, 0, -1) . 'os';
+            $calculationResult = "Gavus papildomus pažymius: " . $formData['marks'] . " jūsų vidurkis iš " . $teachingSubject . " yra " . $futureAverageMark;
+        }
+
+        return $this->render('mark/myMarks.html.twig', [
+            'userTeachingSubjectsWithAverageMarks' => $userTeachingSubjectsWithAverageMarks,
+            'averageMarkCalculatorForm' => $form->createView(),
+            'formSubmited' => $form->isSubmitted(),
+            'calculationResult' => $calculationResult,
         ]);
     }
 

@@ -3,6 +3,7 @@
 namespace App\Service;
 
 use App\Entity\Mark;
+use App\Exceptions\PublicException;
 use App\Repository\MarkRepository;
 use App\Repository\TeachingSubjectRepository;
 use App\Repository\UserRepository;
@@ -91,5 +92,69 @@ class AverageMark
             return '-';
         }
 
+    }
+
+    /**
+     * @param int $studentId
+     * @return array
+     */
+    public function getUserTeachingSubjectsWithAverageMarks($studentId)
+    {
+        $teachingSubjects = $this->teachingSubjectRepository->findAll();
+        $marks = $this->markRepository->findAll();
+        $userTeachingSubjectsWithAverageMarks = [];
+
+        foreach ($teachingSubjects as $teachingSubject) {
+            $averageMark = $this->getAverageMark($marks, $studentId, $teachingSubject->getId());
+            $userTeachingSubjectsWithAverageMarks[] = [$teachingSubject->getTeachingSubject(), $averageMark];
+        }
+
+        return $userTeachingSubjectsWithAverageMarks;
+    }
+
+    /**
+     * @param int $studentId
+     * @param int $teachingSubjectId
+     * @param string $futureMarks
+     * @return float
+     * @throws PublicException
+     */
+    public function getUserFutureAverageMark($studentId, $teachingSubjectId, $futureMarks)
+    {
+        $currentMarks = $this->markRepository->getMarks($studentId, $teachingSubjectId);
+        $markCounter = 0;
+        $markSum = 0;
+
+        foreach ($currentMarks as $currentMark) {
+            $markSum += $currentMark['mark'];
+            $markCounter++;
+        }
+
+        if (strpos($futureMarks, ',')) {
+            $futureMarks = explode(',', $futureMarks);
+        } elseif (!is_numeric($futureMarks)) {
+            throw new PublicException("Neteisingai įvesti pažymiai");
+        }
+
+        if (!is_array($futureMarks)) {
+            if ($futureMarks < 1 || $futureMarks > 10) {
+                throw new PublicException("Prašome vesti pažymius tarp 1 ir 10");
+            }
+            $markSum += $futureMarks;
+            $markCounter++;
+            return $markSum / $markCounter;
+        }
+
+        foreach ($futureMarks as $futureMark) {
+            $futureMark = trim($futureMark);
+            if (is_numeric($futureMark)) {
+                if ($futureMark < 1 || $futureMark > 10) {
+                    throw new PublicException("Prašome vesti pažymius tarp 1 ir 10");
+                }
+                $markSum += $futureMark;
+                $markCounter++;
+            }
+        }
+        return $markSum / $markCounter;
     }
 }
